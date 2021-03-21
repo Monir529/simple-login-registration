@@ -1,0 +1,38 @@
+<<<<<registration>>>>>> 
+
+<form action="{{URL('/register')}}" method="post">
+              {{ csrf_field() }}
+              <input type="text" name="username" placeholder="Username" />  
+              @error('username')
+              <span style="color:red"><div class="error">{{ $message }}</div></span>
+              @enderror       
+              <input type="text" name="email" placeholder="email" />  
+              @error('email')
+              <span style="color:red"> <div class="error">{{ "$message" }}</div></span>
+              @enderror 
+              <input type="password" name="password" placeholder="Password" />
+              @error('password')
+              <span style="color:red">  <div class="error">{{ $message }}</div></span>
+              @enderror
+              <input type="password" name="password2" placeholder="Confirm password" />
+              @error('password2')
+              <span style="color:red">  <div class="error">{{ "Confirm Password must be same as Password" }}</div></span>
+              @enderror
+              <input type="submit" name="submit" value="Sign me up" />
+               
+
+<<<<registration Controller>>>>>
+
+$req->validate([
+        'username'             => 'required',                      
+        'email'            => 'required|email|unique:users',     
+        'password'         => 'required| min:6',
+        'password2' => 'required|same:password'  
+    ]);  
+    $user=new User;
+    $user->username=$req->username;
+    $user->email=$req->email;
+    $user->password=$req->password;
+    $user->reference=$req->reference;
+    $user->save();
+   
